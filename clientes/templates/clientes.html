@@ -1,0 +1,58 @@
+<!-- Con eso traigo toda la base de codigo de la base html -->
+{% extends "base.html" %}
+{% load static %}
+
+
+<!-- Para sinalizar en que "bloco"(especie contenedor) de codigo queremos ingresar nuestra logica -->
+<!--. Si el nombre del dashboard fue puesto con 'comillas simples' aca tambien lo necesitamos con 'comillas simples'  -->
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'clientes/css/clientes.css' %}">
+{% endblock %}
+
+{% block 'dashboard' %}
+<div class="container">
+  <div class="row">
+    <div class="col-md card-dashboard rounded">
+      <p class="text-card">Agregar clientes</p>
+    </div>
+    <div class="col-md card-dashboard rounded">
+      <p class="text-card">Actualizar clientes</p>
+    </div>
+  </div>
+  <div class="agregar-cliente">
+    <form action="{% url 'clientes' %}" class="row" method="POST"> {% csrf_token %}
+      <div class="col-md">
+        <p>Nombre:</p>
+        <input type="text" class="form-control" placeholder="Nombre cliente" name="nombre">
+      </div>
+      <div class="col-md">
+        <p>Apellido:</p>
+        <input type="text" class="form-control" placeholder="Apellido cliente" name="apellido">
+      </div>
+  </div>
+  <br>
+  <p>E-mail:</p>
+  <input type="email" class="form-control" placeholder="nombre@email.com" name="email">
+  <br>
+  <p>DNI:</p>
+  <input type="number" class="form-control" placeholder="__.___.___" name="dni">
+  <hr style="background-color:gray;">
+  <div class="add-autos">
+    <h3>Carros</h3>
+    <span class="btn-add-autos rounded" onclick="add_auto()"> + Agregar auto</span>
+
+    <div id="form-auto">
+
+    </div>
+
+  </div>
+
+  <br>
+  <input type="submit" value="Registrar" class="btn-principal rounded">
+
+  </form>
+
+</div>
+</div>
+<script src="{% static 'clientes/js/clientes.js' %}"></script>
+{% endblock %}
