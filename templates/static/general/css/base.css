@@ -46,11 +46,10 @@
 	right: 0;
 	transform: translateY(-50%);
 	font-size: 22px;
-	transition: all 0.4s ease;
+	transition: all 0.5s ease;
 	font-size: 23px;
 	text-align: center;
 	cursor: pointer;
-	transition: all 0.5s ease;
 }
 .sidebar.open .logo-details #btn {
 	text-align: right;
@@ -139,7 +138,7 @@
 	border-radius: 12px;
 	align-items: center;
 	text-decoration: none;
-	transition: all 0.4s ease;
+	transition: all 0.5s ease;
 	background: var(--main-color);
 }
 .sidebar li a:hover {

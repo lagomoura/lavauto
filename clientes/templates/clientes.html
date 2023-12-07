@@ -12,49 +12,68 @@
 {% block 'dashboard' %}
 <div class="container">
   <div class="row">
-    <div class="col-md card-dashboard rounded">
+    <div class="col-md card-dashboard rounded" onclick="mostrar_form('1')">
       <p class="text-card">Agregar clientes</p>
     </div>
-    <div class="col-md card-dashboard rounded">
+    <div class="col-md card-dashboard rounded" onclick="mostrar_form('2')">
       <p class="text-card">Actualizar clientes</p>
     </div>
   </div>
-  <div class="agregar-cliente">
-    <form action="{% url 'clientes' %}" class="row" method="POST"> {% csrf_token %}
-      <div class="col-md">
-        <p>Nombre:</p>
-        <input type="text" class="form-control" placeholder="Nombre cliente" name="nombre">
-      </div>
-      <div class="col-md">
-        <p>Apellido:</p>
-        <input type="text" class="form-control" placeholder="Apellido cliente" name="apellido">
-      </div>
-  </div>
-  <br>
-  <p>E-mail:</p>
-  <input type="email" class="form-control" placeholder="nombre@email.com" name="email">
-  <br>
-  <p>DNI:</p>
-  <input type="number" class="form-control" placeholder="__.___.___" name="dni">
-  <hr style="background-color:gray;">
-  <div class="add-autos">
-    <h3>Vehículos</h3>
-    <span class="btn-add-autos rounded" onclick="add_auto()"> + Agregar vehículo 🚗🏍️</span>
-
-    <div id="form-auto">
-      <br>
-      <div class='row'>
-        <div class='col-md'> <input type='text' name='auto' placeholder='Modelo' class='form-control rounded'> <input
-            type='text' name='patente' placeholder='Patente' class='form-control rounded my-2'>
+  <div id="agregar-cliente">
+    <div>
+      <form action="{% url 'clientes' %}" class="row" method="POST"> {% csrf_token %}
+        <div class="col-md">
+          <p class="pt-3">Nombre:</p>
+          <!--. El atributo value sirve para mantener la informacion del input, cuando la pagina actualiza pero alguna validacion no es satisfactoria, asi no perdemos las informaciones de los inputs que si tienen informaciones correctas  -->
+          <input type="text" class="form-control" placeholder="Nombre cliente" name="nombre" value='{{nombre}}'>
         </div>
-        <button id='btn-eliminar' class='btn btn-danger my-auto mx-auto py-4'
-          onclick='eliminar_auto()'>Eliminar</button>
+        <div class="col-md">
+          <p class="pt-3">Apellido:</p>
+          <input type="text" class="form-control" placeholder="Apellido cliente" name="apellido" value='{{apellido}}'>
+        </div>
+    </div>
+    <br>
+    <p>E-mail:</p>
+    <input type="email" class="form-control" placeholder="nombre@email.com" name="email" value='{{email}}' >
+    <br>
+    <p>DNI:</p>
+    <input type="number" class="form-control" placeholder="__.___.___" name="dni" value='{{dni}}'>
+    <hr style="background-color:gray;">
+    <div class="add-autos">
+      <h3>Vehículos</h3>
+      <span class="btn-add-autos rounded" onclick="add_auto()"> + Agregar vehículo 🚗🏍️</span>
+      <div id="form-auto">
+        {% for autos, patentes in autos %}
+        <div class="row">
+          <div class="col-md">
+            <input type='text' name='auto' placeholder='Modelo' class='form-control rounded' value="{{autos}}">
+          </div>
+          <div class="col-md">
+            <input type='text' name='patente' placeholder='Patente' class='form-control rounded my-2'
+              value="{{patentes}}">
+          </div>
+          <button id='btn-eliminar' class='btn btn-danger my-auto mx-auto py-4'
+            onclick='eliminar_auto()'>Eliminar</button>
+        </div>
+        {% endfor %}
+        <br>
       </div>
     </div>
+    <br>
+    <input type="submit" value="Registrar" class="btn-principal rounded" name="submit">
+    </form>
   </div>
-  <br>
-  <input type="submit" value="Registrar" class="btn-principal rounded" name="submit">
-  </form>
+</div>
+
+<!--! ACTUALIZAR CLIENTE  -->
+
+<div id="actualizar-cliente">
+  <p class="pt-3 px-1 mx-auto w-50">Seleccione cliente:</p>
+  <select name="" id="cliente-select" class="form-control w-50 mx-auto" onchange="datos_cliente()">
+    {% for cliente in clientes %}
+    <option value="{{cliente.id}}">{{cliente.nombre}}</option>
+    {% endfor %}
+  </select>
 </div>
 </div>
 <script src="{% static 'clientes/js/clientes.js' %}"></script>

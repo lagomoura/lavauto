@@ -5,5 +5,5 @@ from . import views
 
 urlpatterns = [
     # .Recibe una requisicion y da una respuesta
-    path("", views.clientes, name="clientes")
+    path("clientes", views.clientes, name="clientes")
 ]
