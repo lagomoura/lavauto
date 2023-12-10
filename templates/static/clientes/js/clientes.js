@@ -48,7 +48,20 @@ function datos_cliente() {
 			return result.json();
 		})
 		.then(function (data) {
-			console.log(data);
+			document.querySelector('.info_cliente').style.display = 'block';
+
+			nombre = document.getElementById('nombre');
+			nombre.value = data['nombre'];
+
+			apellido = document.getElementById('apellido');
+			apellido.value = data['apellido'];
+
+			email = document.getElementById('email');
+			email.value = data['email'];
+
+			dni = document.getElementById('dni');
+			dni.value = data['dni'];
+
 		})
 		.catch(function (error) {
 			console.error('Error en la solicitud', error);

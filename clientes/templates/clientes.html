@@ -74,7 +74,26 @@
     <option value="{{cliente.id}}">{{cliente.nombre}}</option>
     {% endfor %}
   </select>
-</div>
+  <hr>
+  <br>
+  <div class="info_cliente">
+    <div class="d-flex">
+      <div class="column mx-auto container">
+        <p>Nombre:</p>
+        <input type="text" class="form-control" id="nombre" name="nombre">
+        <p>Apellido:</p>
+        <input type="text" class="form-control" id="apellido" name="apellido">
+        <p>Email:</p>
+        <input type="text" class="form-control" id="email" name="email">
+        <p>DNI:</p>
+        <input type="text" class="form-control" id="dni" name="dni">
+      </div>
+    </div>
+    <div class="column mx-auto container pt-3">
+      <button class="btn btn-danger mx-1">Volver</button>
+      <button class="btn btn-success mx-1">Guardar</button>
+    </div>
+  </div>
 </div>
 <script src="{% static 'clientes/js/clientes.js' %}"></script>
 {% endblock %}
