@@ -34,7 +34,7 @@
     </div>
     <br>
     <p>E-mail:</p>
-    <input type="email" class="form-control" placeholder="nombre@email.com" name="email" value='{{email}}' >
+    <input type="email" class="form-control" placeholder="nombre@email.com" name="email" value='{{email}}'>
     <br>
     <p>DNI:</p>
     <input type="number" class="form-control" placeholder="__.___.___" name="dni" value='{{dni}}'>
@@ -43,7 +43,7 @@
       <h3>Vehículos</h3>
       <span class="btn-add-autos rounded" onclick="add_auto()"> + Agregar vehículo 🚗🏍️</span>
       <div id="form-auto">
-        {% for autos, patentes in autos %}
+        {% for auto, patente in autos %}
         <div class="row">
           <div class="col-md">
             <input type='text' name='auto' placeholder='Modelo' class='form-control rounded' value="{{autos}}">
