@@ -28,9 +28,9 @@ def clientes(request):
         patentes = request.POST.getlist('patente')
 
         #! Prueba de captacion de la informacion
-        # print(autos)
-        # print(patentes)
-        # print(request.POST)
+        print(autos)
+        print(patentes)
+        print(request.POST)
 
         # . Guardamos toda la informacion de un cliente, juntando todos los atributos levantados, y asignamos que informacion cada columna de la base de datos va a recibir.
         cliente = Cliente(
@@ -43,7 +43,7 @@ def clientes(request):
         # . Ingresamos una validacion para que no sea ingresado el mismo cliente 2 veces. Cremos una "flag" donde chequeamos si el dni tomado en el form ya existe en la base de datos. Si eso pasa la variable trae todos estos clientes. Si no hay ningun repetido, la variable queda como NONE
         # todo Agregar una view de cliente repetido
         cliente_repetido = Cliente.objects.filter(dni=dni)
-        print(cliente_repetido)
+        #print(cliente_repetido)
 
         if cliente_repetido.exists():
             return render(request, "clientes.html", {"nombre": nombre, "apellido": apellido, "email": email, "autos": zip(autos, patentes)})
@@ -62,7 +62,10 @@ def clientes(request):
         # . La variable vehiculo, va a ser la informacion globalizada, unificando los autos con sus informaciones, las patentes y todas las informaciones de los clientes,
         for auto, patente in zip(autos, patentes):
             # columna auto lleva la info de auto, columna patente, llega la info de la variable patente.
-            vehiculo = Auto(auto=auto, patente=patente, cliente=cliente)
+            vehiculo = Auto(auto=auto,
+                            patente=patente,
+                            cliente=cliente)
+
             vehiculo.save()
 
         # ! Esa respuesta esta como metodo de test
@@ -74,10 +77,23 @@ def clientes(request):
 def datos_cliente(request):
     id_cliente = request.POST.get("id_cliente")
 # . Aca consigo ubicar el cliente en mi base de datos conectando a traves del id_cliente al mi objeto Cliente
+
     cliente = Cliente.objects.filter(id=id_cliente)
 # . Transformo la info de mi DB en un JSON. La data viene en un formato puro string. Para mejor el manejo transformamos la data en un json adentro de una lista.
+
+    #!
+    # . El metodo filter trae una lista de objetos y no un objeto en particular, por eso tenemos que indicar el indice 0.
+    autos = Auto.objects.filter(cliente=cliente[0])
+    auto_json = json.loads(serializers.serialize("json", autos))
+
+    #!
+
     cliente_json = json.loads(
         serializers.serialize("json", cliente))[0]["fields"]
+
+    # print(auto_json)
+
+
 # .El json traz la informacion en una lista en diccionario de 3 indices (model, pk, fields). Agregamos indice 0 para sacar de la lista y buscamos por la key FIELDS que es donde estan guardadas la informacion del cliente.
     return JsonResponse(cliente_json)
 # . Enviamos esa informacion el fron

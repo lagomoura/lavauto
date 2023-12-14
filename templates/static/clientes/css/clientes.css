@@ -14,15 +14,16 @@
 
 .btn-add-autos {
 	background-color: var(--contrast-color);
+	color: var(--light-color);
 	padding: 5px;
 	font-weight: bold;
 	cursor: pointer;
 }
 
 .btn-principal {
-	color: white;
+	color: var(--light-color);
 	border: none;
-	background-color: var(--dark-color);
+	background-color: var(--differential-color);
 	padding: 5px;
 	font-size: 30px;
 }

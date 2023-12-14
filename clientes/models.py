@@ -21,7 +21,7 @@ class Cliente(models.Model):
 class Auto(models.Model):
     auto = models.CharField(max_length=20)
     patente = models.CharField(max_length=10)
-    # Models.cascade siguinifica que al deletar un cliente, todos los autos que estan asociados a ese cliente tambien van a ser deletados. En caso contrario, deberiamos usar models.SET_NULL
+    #. Models.cascade siguinifica que al deletar un cliente, todos los autos que estan asociados a ese cliente tambien van a ser deletados. En caso contrario, deberiamos usar models.SET_NULL
     cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     lavados = models.IntegerField(default=0)
     arreglos = models.IntegerField(default=0)
