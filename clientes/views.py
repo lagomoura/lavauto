@@ -43,7 +43,7 @@ def clientes(request):
         # . Ingresamos una validacion para que no sea ingresado el mismo cliente 2 veces. Cremos una "flag" donde chequeamos si el dni tomado en el form ya existe en la base de datos. Si eso pasa la variable trae todos estos clientes. Si no hay ningun repetido, la variable queda como NONE
         # todo Agregar una view de cliente repetido
         cliente_repetido = Cliente.objects.filter(dni=dni)
-        #print(cliente_repetido)
+        # print(cliente_repetido)
 
         if cliente_repetido.exists():
             return render(request, "clientes.html", {"nombre": nombre, "apellido": apellido, "email": email, "autos": zip(autos, patentes)})
@@ -85,15 +85,24 @@ def datos_cliente(request):
     # . El metodo filter trae una lista de objetos y no un objeto en particular, por eso tenemos que indicar el indice 0.
     autos = Auto.objects.filter(cliente=cliente[0])
     auto_json = json.loads(serializers.serialize("json", autos))
-
-    #!
+    auto_json = [{"fields": auto["fields"], "id": auto["pk"]}  # . Paa cada auto quiero que me traiga el fildes (nombre del diccionario donde esta guardada la info de cada auto) y el id de ese auto
+                 for auto in auto_json]
 
     cliente_json = json.loads(
         serializers.serialize("json", cliente))[0]["fields"]
 
-    # print(auto_json)
+    # . Unifico la informacion del cliente con sus autos
+    data = {"cliente": cliente_json, "autos": auto_json}
 
+    print(data)
+    #!
 
 # .El json traz la informacion en una lista en diccionario de 3 indices (model, pk, fields). Agregamos indice 0 para sacar de la lista y buscamos por la key FIELDS que es donde estan guardadas la informacion del cliente.
-    return JsonResponse(cliente_json)
+    return JsonResponse(data)
 # . Enviamos esa informacion el fron
+
+def update_auto(request, id):
+    nombre_auto = request.POST.get("auto")
+    patente = request.POST.get("patente")
+    
+    

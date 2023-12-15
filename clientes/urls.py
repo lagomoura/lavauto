@@ -6,5 +6,6 @@ from . import views
 urlpatterns = [
     # .Recibe una requisicion y da una respuesta
     path("", views.clientes, name="clientes"), 
-    path("actualiza_cliente/", views.datos_cliente, name="actualiza_cliente")
+    path("actualiza_cliente/", views.datos_cliente, name="actualiza_cliente"),
+    path("update_auto/<int:id>", views.update_auto, name="update_auto")
 ]

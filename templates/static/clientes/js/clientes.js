@@ -2,7 +2,7 @@ function add_auto() {
 	container = document.getElementById('form-auto');
 
 	html =
-		"<br> <div class='row'> <div class='col-md'> <input type='text' name='auto' placeholder='Modelo' class='form-control rounded'> <input type='text' name='patente' placeholder='Patente' class='form-control rounded my-2' > </div> <button id='btn-eliminar' class='btn btn-danger my-auto mx-auto py-4' onclick='eliminar_auto()'>Eliminar</button> </div>";
+		"<br> <div class='row'> <div class='col-md'> <input type='text' name='auto' placeholder='Modelo' class='form-control rounded'> <input type='text' name='patente' placeholder='Patente' class='form-control rounded my-2' > </div> <button id='btn-eliminar' class='btn btn-danger my-auto mx-auto py-4'>Eliminar</button> </div>";
 
 	container.innerHTML += html;
 }
@@ -51,17 +51,48 @@ function datos_cliente() {
 			document.querySelector('.info_cliente').style.display = 'block';
 
 			nombre = document.getElementById('nombre');
-			nombre.value = data['nombre'];
+			nombre.value = data['cliente']['nombre'];
 
 			apellido = document.getElementById('apellido');
-			apellido.value = data['apellido'];
+			apellido.value = data['cliente']['apellido'];
 
 			email = document.getElementById('email');
-			email.value = data['email'];
+			email.value = data['cliente']['email'];
 
 			dni = document.getElementById('dni');
-			dni.value = data['dni'];
+			dni.value = data['cliente']['dni'];
 
+			autos_div = document.getElementById('autos');
+			autos_div.innerHTML = ''; //. Limpiamos la pantalla de los autos al momento de cambiar a otro cliente.
+
+			//. Capturamos cada auto guardado en cada cliente
+			for (i = 0; i < data['autos'].length; i++) {
+				console.log(data['autos'][i]['fields']['auto']);
+
+				autos_div.innerHTML +=
+					"<form action= '/clientes/update_auto/" +
+						data['autos'][i]['id'] +
+					"   method=''>\
+				<div class='row'>\
+					<div class='col-md'>\
+						<p class='pt-2'>Vehiculo</p>\
+						<input class='form-control' type='text' name='auto' value='" +
+						data['autos'][i]['fields']['auto'] +
+					"'>\
+					</div>\
+					<div class='col-md'>\
+						<p class='pt-2'>Patente</p>\
+						<input class='form-control' type='text' name='patente' value='" +
+						data['autos'][i]['fields']['patente'] +
+					"'>\
+				</div>\
+				<div class='col-md'>\
+				<input class='btn btn-danger mt-5' type='submit' value='Cancelar'>\
+				<input class='btn btn-success mt-5' type='submit' value='Guardar Cambios'>\
+		</div>\
+				</div>\
+				";
+			}
 		})
 		.catch(function (error) {
 			console.error('Error en la solicitud', error);

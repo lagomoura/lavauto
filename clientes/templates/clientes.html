@@ -31,10 +31,10 @@
         </div>
         <br>
         <div class="row w-100">
-          <p>E-mail:</p>
+          <p class="pt-3">E-mail:</p>
           <input type="email" class="form-control" placeholder="nombre@email.com" name="email" value='{{email}}'>
           <br>
-          <p>DNI:</p>
+          <p class="pt-3">DNI:</p>
           <input type="number" class="form-control" placeholder="__.___.___" name="dni" value='{{dni}}'>
         </div>
         <hr style="background-color:gray;">
@@ -51,8 +51,7 @@
                 <input type='text' name='patente' placeholder='Patente' class='form-control rounded my-2'
                   value="{{patente}}">
               </div>
-              <button id='btn-eliminar' class='btn btn-danger my-auto mx-auto py-4'
-                onclick='eliminar_auto()'>Eliminar</button>
+              <button id='btn-eliminar' class='btn btn-danger mx-auto py-4'>Eliminar</button>
             </div>
             {% endfor %}
             <br>
@@ -87,11 +86,12 @@
         <input type="text" class="form-control" id="email" name="email">
         <p class="pt-2">DNI:</p>
         <input type="text" class="form-control" id="dni" name="dni">
+        <hr>
+        <h3>Autos</h3>
+        <div id="autos">
+
+        </div>
       </div>
-    </div>
-    <div class="column mx-auto container pt-3">
-      <button class="btn btn-danger mx-1">Volver</button>
-      <button class="btn btn-success mx-1">Guardar</button>
     </div>
   </div>
 </div>
