@@ -70,7 +70,7 @@
   <p class="pt-3 px-1 mx-auto w-50">Seleccione cliente:</p>
   <select name="" id="cliente-select" class="form-control w-50 mx-auto" onchange="datos_cliente()">
     {% for cliente in clientes %}
-    <option value="{{cliente.id}}">{{cliente.nombre}}</option>
+      <option value="{{cliente.id}}">{{cliente.nombre}}</option>
     {% endfor %}
   </select>
   <hr>

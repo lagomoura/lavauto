@@ -69,29 +69,23 @@ function datos_cliente() {
 			for (i = 0; i < data['autos'].length; i++) {
 				console.log(data['autos'][i]['fields']['auto']);
 
-				autos_div.innerHTML +=
-					"<form action= '/clientes/update_auto/" +
-						data['autos'][i]['id'] +
-					"   method=''>\
-				<div class='row'>\
-					<div class='col-md'>\
-						<p class='pt-2'>Vehiculo</p>\
-						<input class='form-control' type='text' name='auto' value='" +
-						data['autos'][i]['fields']['auto'] +
-					"'>\
+				autos_div.innerHTML += `<div>\
+					<form action= '/clientes/update_auto/${data['autos'][i]['id']}' method='POST'>\
+						<div class='row'>\
+							<div class='col-md'>\
+								<p class='pt-2'>Vehiculo</p>\
+								<input class='form-control' type='text' name='auto' value='${data['autos'][i]['fields']['auto']}'>\
+						</div>\
+						<div class='col-md'>\
+								<p class='pt-2'>Patente</p>\
+								<input class='form-control' type='text' name='patente' value='${data['autos'][i]['fields']['patente']}'>\
+						</div>\
+						<input class='btn btn-success mt-5' type='submit' value='Guardar')>\
+					</form>\
+					<div class='col-md-3'>\
+						<a class='btn btn-danger mt-5' href='/clientes/eliminar_auto/${data['autos'][i]['id']}'>Eliminar</a>\
 					</div>\
-					<div class='col-md'>\
-						<p class='pt-2'>Patente</p>\
-						<input class='form-control' type='text' name='patente' value='" +
-						data['autos'][i]['fields']['patente'] +
-					"'>\
-				</div>\
-				<div class='col-md'>\
-				<input class='btn btn-danger mt-5' type='submit' value='Cancelar'>\
-				<input class='btn btn-success mt-5' type='submit' value='Guardar Cambios'>\
-		</div>\
-				</div>\
-				";
+				</div>`;
 			}
 		})
 		.catch(function (error) {

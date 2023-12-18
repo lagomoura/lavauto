@@ -10,6 +10,10 @@ from .models import Cliente, Auto
 import re  # . Importa biblioteca de expresiones regulares
 from django.core import serializers  # . Transforma una model(objeto) en json
 import json
+# . Nos da la opcion de desactivar la validacion de seguridad csrf token de un formulario
+from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse
+from django.shortcuts import redirect
 
 # . La funcion es la encargada de recibir y organizar la data colectada en el fron, criendo el objeto cliente y guardando en la DB.
 
@@ -99,10 +103,34 @@ def datos_cliente(request):
 
 # .El json traz la informacion en una lista en diccionario de 3 indices (model, pk, fields). Agregamos indice 0 para sacar de la lista y buscamos por la key FIELDS que es donde estan guardadas la informacion del cliente.
     return JsonResponse(data)
-# . Enviamos esa informacion el fron
+# . Enviamos esa informacion el front
 
+
+@csrf_exempt  # . Junto con la importacion del inicio del archivo desactiva la validacion de seguridad csrf token del formulario vinculado a esa funcion
 def update_auto(request, id):
     nombre_auto = request.POST.get("auto")
     patente = request.POST.get("patente")
-    
-    
+
+    # .
+    auto = Auto.objects.get(id=id)
+    # . Guardamos todos los datos de los vehiculos excluyendo los datos del proprio cliente de ese listado, asi podemos validar si la pantente ya existe sin dar conflicto con el registro del proprio cliente en el banco. Por eso se utiliza el exclude
+    lista_autos = Auto.objects.filter(patente=patente).exclude(id=id)
+    if lista_autos.exists():
+        # . En el caso de que la patente ya exista en la BD no se hace el update.
+        return HttpResponse("Patente ya existente")
+
+    auto.auto = nombre_auto  # . En caso de update, el nuevo nombre se tome
+    auto.patente = patente  # . Nueva patante se toma
+    auto.save()  # . Se envia a DB
+
+    return HttpResponse("Datos modificados con suceso")
+
+
+def eliminar_auto(request, id):
+    try:
+        auto = Auto.objects.get(id=id)
+        auto.delete()
+        return redirect(reverse("cliente") + f'?aba=actualizar_cliente&id_cliente={id}')
+    except Exception:
+        # todo Crear msg de error
+        return redirect(reverse("clientes") + f'?aba=actualizar_cliente&id_cliente={id}')
