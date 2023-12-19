@@ -70,12 +70,13 @@
   <p class="pt-3 px-1 mx-auto w-50">Seleccione cliente:</p>
   <select name="" id="cliente-select" class="form-control w-50 mx-auto" onchange="datos_cliente()">
     {% for cliente in clientes %}
-      <option value="{{cliente.id}}">{{cliente.nombre}}</option>
+    <option value="{{cliente.id}}">{{cliente.nombre}}</option>
     {% endfor %}
   </select>
   <hr>
   <br>
   <div class="info_cliente">
+    <input type="hidden" id="id">
     <div class="d-flex">
       <div class="column mx-auto container">
         <p>Nombre:</p>
@@ -86,6 +87,7 @@
         <input type="text" class="form-control" id="email" name="email">
         <p class="pt-2">DNI:</p>
         <input type="text" class="form-control" id="dni" name="dni">
+        <input type="submit" value="Guardar" class="btn btn-success mt-4" onclick="update_cliente()">
         <hr>
         <h3>Autos</h3>
         <div id="autos">

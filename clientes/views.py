@@ -13,7 +13,7 @@ import json
 # . Nos da la opcion de desactivar la validacion de seguridad csrf token de un formulario
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 
 # . La funcion es la encargada de recibir y organizar la data colectada en el fron, criendo el objeto cliente y guardando en la DB.
 
@@ -79,10 +79,11 @@ def clientes(request):
 
 
 def datos_cliente(request):
-    id_cliente = request.POST.get("id_cliente")
+    id_cliente = int(request.POST.get("id_cliente"))
 # . Aca consigo ubicar el cliente en mi base de datos conectando a traves del id_cliente al mi objeto Cliente
 
     cliente = Cliente.objects.filter(id=id_cliente)
+
 # . Transformo la info de mi DB en un JSON. La data viene en un formato puro string. Para mejor el manejo transformamos la data en un json adentro de una lista.
 
     #!
@@ -96,9 +97,11 @@ def datos_cliente(request):
         serializers.serialize("json", cliente))[0]["fields"]
 
     # . Unifico la informacion del cliente con sus autos
-    data = {"cliente": cliente_json, "autos": auto_json}
+    data = {"cliente": cliente_json,
+            "autos": auto_json, "id_cliente": id_cliente}
 
-    print(data)
+    # .Prueba
+    # print(data)
     #!
 
 # .El json traz la informacion en una lista en diccionario de 3 indices (model, pk, fields). Agregamos indice 0 para sacar de la lista y buscamos por la key FIELDS que es donde estan guardadas la informacion del cliente.
@@ -134,3 +137,26 @@ def eliminar_auto(request, id):
     except Exception:
         # todo Crear msg de error
         return redirect(reverse("clientes") + f'?aba=actualizar_cliente&id_cliente={id}')
+
+
+def update_cliente(request, id):
+    body = json.loads(request.body)
+
+    nombre = body["nombre"]
+    apellido = body["apellido"]
+    email = body["email"]
+    dni = body["dni"]
+
+    try:
+        cliente = get_object_or_404(Cliente, id=id)
+        cliente.nombre = nombre
+        cliente.apellido = apellido
+        cliente.email = email
+        cliente.dni = dni
+
+        cliente.save()
+
+        return JsonResponse({"status":"200", "nombre": nombre, "apellido": apellido, "email": email, "dni": dni})
+    
+    except Exception:
+        return JsonResponse({"status":"500"})

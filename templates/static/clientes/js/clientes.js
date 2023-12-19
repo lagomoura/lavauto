@@ -50,6 +50,9 @@ function datos_cliente() {
 		.then(function (data) {
 			document.querySelector('.info_cliente').style.display = 'block';
 
+			id = document.getElementById('id');
+			id.value = data['id_cliente'];
+
 			nombre = document.getElementById('nombre');
 			nombre.value = data['cliente']['nombre'];
 
@@ -64,6 +67,9 @@ function datos_cliente() {
 
 			autos_div = document.getElementById('autos');
 			autos_div.innerHTML = ''; //. Limpiamos la pantalla de los autos al momento de cambiar a otro cliente.
+
+			//. Prueba
+			// console.log(data)
 
 			//. Capturamos cada auto guardado en cada cliente
 			for (i = 0; i < data['autos'].length; i++) {
@@ -94,3 +100,40 @@ function datos_cliente() {
 }
 
 // todo  Agregar logica de eliminar un auto
+
+function update_cliente() {
+	id = document.getElementById('id').value;
+	nombre = document.getElementById('nombre').value;
+	apellido = document.getElementById('apellido').value;
+	email = document.getElementById('email').value;
+	dni = document.getElementById('dni').value;
+
+	fetch('/clientes/update_cliente/' + id, {
+		method: 'POST',
+		headers: {
+			'X-CSRFToken': csrf_token,
+		},
+		body: JSON.stringify({
+			nombre: nombre,
+			apellido: apellido,
+			email: email,
+			dni: dni,
+		}),
+	})
+		.then(function (result) {
+			return result.json();
+		})
+		.then(function (data) {
+			console.log(data);
+			if (data['status'] == '200') {
+				nombre = data['nombre'];
+				apellido = data['apellido'];
+				email = data['apellido'];
+				dni = data['dni'];
+
+				console.log('Datos modificados con suceso!');
+			} else {
+				console.log('Error!');
+			}
+		});
+}

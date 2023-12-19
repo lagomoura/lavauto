@@ -8,5 +8,6 @@ urlpatterns = [
     path("", views.clientes, name="clientes"),
     path("actualiza_cliente/", views.datos_cliente, name="actualiza_cliente"),
     path("update_auto/<int:id>", views.update_auto, name="update_auto"),
-    path("eliminar_auto/<int:id>", views.eliminar_auto, name="eliminar_auto")
+    path("eliminar_auto/<int:id>", views.eliminar_auto, name="eliminar_auto"),
+    path("update_cliente/<int:id>", views.update_cliente, name="update_cliente")
 ]
