@@ -124,7 +124,9 @@ function update_cliente() {
 			return result.json();
 		})
 		.then(function (data) {
+			//. Prueba ver datos
 			console.log(data);
+
 			if (data['status'] == '200') {
 				nombre = data['nombre'];
 				apellido = data['apellido'];

@@ -26,7 +26,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'clientes'
+    # My apps
+    'clientes',
+    'servicios'
 ]
 
 MIDDLEWARE = [
@@ -44,7 +46,8 @@ ROOT_URLCONF = 'lavauto.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "templates")], #Agrego una carpeta templates donde todo el HTML quedara ahi
+        # Agrego una carpeta templates donde todo el HTML quedara ahi
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
