@@ -99,7 +99,7 @@ function datos_cliente() {
 		});
 }
 
-// todo  Agregar logica de eliminar un auto
+//  TODO  Agregar logica de eliminar un auto
 
 function update_cliente() {
 	id = document.getElementById('id').value;

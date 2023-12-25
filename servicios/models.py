@@ -1,10 +1,12 @@
+
 from django.db import models
 from clientes.models import Cliente
 from .choices import ChoicesCategoriaMantenimiento
 from datetime import datetime
 from secrets import token_hex
 
-# Create your models here.
+#! Modelado de base de datos
+# . Creamos una clase para categorizar las opciones de mantenimiento, importanto las opciones desde un archivo a parte. Esas opciones DJANGO llama de CHOICES. Se crea una tabla para cada class creada en los models.
 
 
 class CategoriaMantenimiento(models.Model):

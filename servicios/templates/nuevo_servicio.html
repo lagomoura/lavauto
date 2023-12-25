@@ -1,1 +1,14 @@
-<h1>Nuevo Servicio</h1>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'clientes/css/clientes.css' %}">
+{% endblock %}
+
+{% block 'dashboard' %}
+<!--. Estamos importanto el formulario generado en forms.py que a su vez, esta tomando el form generado en el models  -->
+<div class="container">
+  <br>
+  {{form.as_p}} 
+</div>
+{% endblock %}

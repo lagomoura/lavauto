@@ -45,7 +45,7 @@ def clientes(request):
         )
 
         # . Ingresamos una validacion para que no sea ingresado el mismo cliente 2 veces. Cremos una "flag" donde chequeamos si el dni tomado en el form ya existe en la base de datos. Si eso pasa la variable trae todos estos clientes. Si no hay ningun repetido, la variable queda como NONE
-        # todo Agregar una view de cliente repetido
+        # TODO Agregar una view de cliente repetido
         cliente_repetido = Cliente.objects.filter(dni=dni)
         # print(cliente_repetido)
 
@@ -90,7 +90,7 @@ def datos_cliente(request):
     # . El metodo filter trae una lista de objetos y no un objeto en particular, por eso tenemos que indicar el indice 0.
     autos = Auto.objects.filter(cliente=cliente[0])
     auto_json = json.loads(serializers.serialize("json", autos))
-    auto_json = [{"fields": auto["fields"], "id": auto["pk"]}  # . Paa cada auto quiero que me traiga el fildes (nombre del diccionario donde esta guardada la info de cada auto) y el id de ese auto
+    auto_json = [{"fields": auto["fields"], "id": auto["pk"]}  # . Paa cada auto quiero que me traiga el filds (nombre del diccionario donde esta guardada la info de cada auto) y el id de ese auto
                  for auto in auto_json]
 
     cliente_json = json.loads(
@@ -114,7 +114,6 @@ def update_auto(request, id):
     nombre_auto = request.POST.get("auto")
     patente = request.POST.get("patente")
 
-    # .
     auto = Auto.objects.get(id=id)
     # . Guardamos todos los datos de los vehiculos excluyendo los datos del proprio cliente de ese listado, asi podemos validar si la pantente ya existe sin dar conflicto con el registro del proprio cliente en el banco. Por eso se utiliza el exclude
     lista_autos = Auto.objects.filter(patente=patente).exclude(id=id)
@@ -135,7 +134,7 @@ def eliminar_auto(request, id):
         auto.delete()
         return redirect(reverse("cliente") + f'?aba=actualizar_cliente&id_cliente={id}')
     except Exception:
-        # todo Crear msg de error
+        # TODO Crear msg de error
         return redirect(reverse("clientes") + f'?aba=actualizar_cliente&id_cliente={id}')
 
 
@@ -156,7 +155,7 @@ def update_cliente(request, id):
 
         cliente.save()
 
-        return JsonResponse({"status":"200", "nombre": nombre, "apellido": apellido, "email": email, "dni": dni})
-    
+        return JsonResponse({"status": "200", "nombre": nombre, "apellido": apellido, "email": email, "dni": dni})
+
     except Exception:
-        return JsonResponse({"status":"500"})
+        return JsonResponse({"status": "500"})

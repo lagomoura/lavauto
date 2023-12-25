@@ -1,7 +1,7 @@
 from django.shortcuts import render
-
-# Create your views here.
+from .forms import FormServicio
 
 
 def nuevo_servicio(request):
-    return render(request, 'nuevo_servicio.html')
+    form = FormServicio()
+    return render(request, 'nuevo_servicio.html', {'form': form})
