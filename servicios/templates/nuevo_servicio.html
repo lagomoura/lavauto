@@ -9,6 +9,11 @@
 <!--. Estamos importanto el formulario generado en forms.py que a su vez, esta tomando el form generado en el models  -->
 <div class="container">
   <br>
-  {{form.as_p}} 
+  <form action="{% url 'nuevo_servicio' %}" method="POST">{% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" class="btn btn-success" value="Guardar">
+  </form>
+
+
 </div>
 {% endblock %}
